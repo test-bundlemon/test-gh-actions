@@ -1,0 +1,24 @@
+name: checks
+
+on:
+  push:
+    branches: [master, release/*, next]
+  pull_request:
+    types: [synchronize, opened, reopened]
+
+jobs:
+  create_commit:
+    runs-on: ubuntu-latest 
+    permissions:
+      issues: write 
+    steps:
+      - name: Create issue using REST API
+        run: |         
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          https://api.github.com/repos/${{ github.repository }}/issues/${{github.event.pull_request.number}}/comments \
+          -d '{"body":"HELLO"}'
+          --fail
