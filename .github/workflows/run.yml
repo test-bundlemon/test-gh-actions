@@ -32,4 +32,3 @@ jobs:
           --header 'content-type: application/json' \
           https://api.github.com/repos/${{ github.repository }}/issues/${{github.event.pull_request.number}}/comments \
           -d '{"body":"HELLO"}'
-          --fail
